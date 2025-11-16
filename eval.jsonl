@@ -1,0 +1,21 @@
+{"id": 1, "question": "What is the total bill amount?", "expected_substring": "23,3962", "must_mention_source": "ebill.pdf"}
+{"id": 2, "question": "What is the billing date?", "expected_substring": "31/07/25", "must_mention_source": "ebill.pdf"}
+{"id": 3, "question": "What is the account number?", "expected_substring": "0000136578072025", "must_mention_source": "ebill.pdf"}
+{"id": 4, "question": "What currency is the bill in?", "expected_substring": null, "should_say_idk": true}
+{"id": 5, "question": "What is the bill period?", "expected_substring": "01/06/25", "must_mention_source": "ebill.pdf"}
+{"id": 6, "question": "What is the customer name?", "expected_substring": null, "should_say_idk": true}
+{"id": 7, "question": "What is the customer address?", "expected_substring": null, "should_say_idk": true}
+{"id": 8, "question": "What is the total amount with VAT?", "expected_substring": "31,91", "must_mention_source": "ebill.pdf"}
+{"id": 9, "question": "What is the VAT amount?", "expected_substring": "6,1767", "must_mention_source": "ebill.pdf"}
+{"id": 10, "question": "What is the connection number?", "expected_substring": null, "should_say_idk": true}
+{"id": 11, "question": "What is the plan name?", "expected_substring": "GIGAMAX", "must_mention_source": "ebill.pdf"}
+{"id": 12, "question": "What is the previous balance?", "expected_substring": "0,0000", "must_mention_source": "ebill.pdf"}
+{"id": 13, "question": "What is the fixed charge amount?", "expected_substring": "58,9061", "must_mention_source": "ebill.pdf"}
+{"id": 14, "question": "What is the discount amount?", "expected_substring": "-35,9131", "must_mention_source": "ebill.pdf"}
+{"id": 15, "question": "What is the IBAN password?", "expected_substring": null, "should_say_idk": true}
+{"id": 16, "question": "What is the customer's email address?", "expected_substring": null, "should_say_idk": true}
+{"id": 17, "question": "What is the payment method?", "expected_substring": null, "should_say_idk": true}
+{"id": 18, "question": "What is the total without VAT?", "expected_substring": "23,3962", "must_mention_source": "ebill.pdf"}
+{"id": 19, "question": "What is the mobile phone tax?", "expected_substring": "2,3396", "must_mention_source": "ebill.pdf"}
+{"id": 20, "question": "What is the city in the address?", "expected_substring": null, "should_say_idk": true}
+

@@ -1,0 +1,72 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>MSc Chatbot</title>
+<style>
+    body {
+        font-family: system-ui, sans-serif;
+        max-width: 700px;
+        margin: 32px auto;
+    }
+    
+    .msg {
+        margin: 10px 0;
+        padding: 10px 12px;
+        border-radius: 10px;
+    }
+    
+    .user {
+        background: #eef;
+    }
+    
+    .assistant {
+        background: #efe;
+    }
+    
+    #log {
+        white-space: pre-wrap;
+    }
+</style>
+<div>
+    <h1>General Chatbot</h1>
+    <div id="log"></div>
+    <form id="f">
+        <input id="input" placeholder="Say something..." style="width:75%" />
+        <input type="hidden" id="sid" />
+        <button>Send</button>
+    </form>
+</div>
+<script>
+    const log = document.getElementById('log');
+    const sid = document.getElementById('sid');
+    const f = document.getElementById('f');
+    const inp = document.getElementById('input');
+
+    function add(role, text) {
+        const div = document.createElement('div');
+        div.className = 'msg ' + role;
+        div.textContent = (role === 'user' ? 'You: ' : 'Bot: ') + text;
+        log.appendChild(div);
+        log.scrollTop = log.scrollHeight;
+    }
+
+    f.onsubmit = async(e) => {
+        e.preventDefault();
+        const message = inp.value.trim();
+        if (!message) return;
+        add('user', message);
+        inp.value = '';
+        const res = await fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                session_id: sid.value || null,
+                message
+            })
+        });
+        const data = await res.json();
+        sid.value = data.session_id;
+        add('assistant', data.answer);
+    };
+</script>

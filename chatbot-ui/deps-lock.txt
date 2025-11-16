@@ -1,0 +1,22 @@
+chatbot-ui@0.1.0 /Users/alextsirtiris/Desktop/chatbot/chatbot-ui
++-- @emnapi/core@1.7.0 extraneous
++-- @emnapi/runtime@1.7.0 extraneous
++-- @emnapi/wasi-threads@1.1.0 extraneous
++-- @napi-rs/wasm-runtime@0.2.12 extraneous
++-- @tailwindcss/postcss@4.1.16
++-- @tailwindcss/typography@0.5.19
++-- @tybys/wasm-util@0.10.1 extraneous
++-- @types/node@20.19.24
++-- @types/react-dom@19.2.2
++-- @types/react@19.2.2
++-- babel-plugin-react-compiler@1.0.0
++-- eslint-config-next@16.0.1
++-- eslint@9.39.1
++-- next@16.0.1
++-- react-dom@19.2.0
++-- react-markdown@10.1.0
++-- react@19.2.0
++-- remark-gfm@4.0.1
++-- tailwindcss@4.1.16
+`-- typescript@5.9.3
+
