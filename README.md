@@ -35,8 +35,8 @@ Additional features include **dark/light mode**, **session persistence**, and **
 
 ```mermaid
 graph TD
-A[User Interface (Next.js)] -->|REST API| B(FastAPI Backend)
-B --> C[Redis Memory]
-B --> D[Chroma Vector Store]
-B --> E[OpenAI GPT-4 + Embeddings API]
-D --> F[(PDF / TXT Documents)]
+    A[User Interface (Next.js)] -->|REST API| B(FastAPI Backend)
+    B --> C[Redis Memory]
+    B --> D[Chroma Vector Store]
+    B --> E[OpenAI GPT-4 + Embeddings API]
+    D --> F[(PDF / TXT Documents)]
