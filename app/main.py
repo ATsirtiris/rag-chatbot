@@ -31,7 +31,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://rag-chatbot-frontend.onrender.com",
+        "https://rag-chatbot-frontend-uogt.onrender.com", 
         "http://localhost:3000",
         "http://localhost:3010",
     ],
