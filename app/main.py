@@ -1,7 +1,5 @@
 from fastapi import FastAPI, Body, Depends
 
-from fastapi.middleware.cors import CORSMiddleware
-
 from fastapi.responses import HTMLResponse, JSONResponse
 
 from uuid import uuid4
@@ -26,9 +24,23 @@ from .users import router as user_router
 
 from .auth import get_current_user
 
+from fastapi.middleware.cors import CORSMiddleware
 
+app = FastAPI()
 
-RAG_MIN_SCORE = 0.30  # tune if needed
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://rag-chatbot-frontend.onrender.com",
+        "http://localhost:3000",
+        "http://localhost:3010",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+RAG_MIN_SCORE = 0.30  
 
 
 
