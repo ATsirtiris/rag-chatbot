@@ -26,12 +26,10 @@ from .auth import get_current_user
 
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://rag-chatbot-frontend-uogt.onrender.com", 
+        "https://rag-chatbot-frontend-uogt.onrender.com",  # your actual frontend URL
         "http://localhost:3000",
         "http://localhost:3010",
     ],
