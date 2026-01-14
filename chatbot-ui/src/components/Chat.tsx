@@ -2,11 +2,13 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { useRouter } from "next/navigation";
+
 import ReactMarkdown from "react-markdown";
 
 import remarkGfm from "remark-gfm";
 
-import { postChat, getHealth, resetSession } from "@/lib/api";
+import { postChat, getHealth, resetSession, getAuthHeaders } from "@/lib/api";
 
 import { useToast } from "@/components/Toast";
 
@@ -46,6 +48,8 @@ type Msg = {
 
 export default function Chat() {
 
+  const router = useRouter();
+
   const [sessionId, setSessionId] = useState<string | undefined>();
 
   const [msgs, setMsgs] = useState<Msg[]>([]);
@@ -65,6 +69,8 @@ export default function Chat() {
   const [showSources, setShowSources] = useState(true);
 
   const [chatTitle, setChatTitle] = useState<string>("New Chat");
+
+  const [username, setUsername] = useState<string>("");
 
 
 
@@ -105,6 +111,30 @@ export default function Chat() {
     });
 
   }, [msgs, loading]);
+
+
+
+  // auth guard - redirect to login if no token
+
+  useEffect(() => {
+
+    if (typeof window === "undefined") return;
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+
+      router.push("/login");
+
+    } else {
+
+      const savedUsername = localStorage.getItem("username");
+
+      if (savedUsername) setUsername(savedUsername);
+
+    }
+
+  }, [router]);
 
 
 
@@ -213,7 +243,8 @@ export default function Chat() {
 
       if (!res.ok) {
 
-        push(res.data.error || "Request failed");
+        console.error("Chat request failed:", res);
+        push(res.data?.error || `Request failed (status: ${res.data?.error || 'unknown'})`);
 
         setLoading(false);
 
@@ -221,7 +252,11 @@ export default function Chat() {
 
       }
 
-
+      if ('error' in res.data) {
+        push(res.data.error);
+        setLoading(false);
+        return;
+      }
 
       const { answer, session_id, tokens_in, tokens_out, sources } = res.data;
 
@@ -261,6 +296,7 @@ export default function Chat() {
 
     } catch (e: any) {
 
+      console.error("Chat error:", e);
       push(e?.message || "Network error");
 
     } finally {
@@ -337,9 +373,11 @@ export default function Chat() {
 
     try {
 
-      const BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+      const BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8010";
 
-      const res = await fetch(`${BASE}/session/${sessionId}`);
+      const res = await fetch(`${BASE}/session/${sessionId}`, {
+        headers: getAuthHeaders(),
+      });
 
       if (!res.ok) throw new Error("Failed to fetch session");
 
@@ -355,7 +393,9 @@ export default function Chat() {
 
       a.href = url;
 
-      a.download = `session_${sessionId}.json`;
+      const username = localStorage.getItem("username") || "user";
+
+      a.download = `${username}_session_${sessionId}.json`;
 
       a.click();
 
@@ -467,6 +507,22 @@ export default function Chat() {
 
   }
 
+  function logout() {
+
+    localStorage.removeItem("token");
+
+    localStorage.removeItem("username");
+
+    localStorage.removeItem("session_id");
+
+    setMsgs([]);
+
+    setSessionId(undefined);
+
+    router.push("/login");
+
+  }
+
 
 
   return (
@@ -489,6 +545,12 @@ export default function Chat() {
               — {chatTitle}
             </span>
           </h1>
+
+          <p className="chat-subtitle">
+
+            Logged in as: {username}
+
+          </p>
 
           <p className="chat-subtitle">
 
@@ -629,6 +691,20 @@ export default function Chat() {
               {theme === "dark" ? "☀︎" : "🌙"}
 
             </span>
+
+          </button>
+
+          <button
+
+            onClick={logout}
+
+            className="chat-btn"
+
+            disabled={loading}
+
+          >
+
+            Logout
 
           </button>
 

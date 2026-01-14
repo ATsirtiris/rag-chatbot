@@ -24,25 +24,27 @@ class RedisMemory:
 
 
 
-    def _key(self, session_id: str) -> str:
+    def _key(self, user_id: str, session_id: str) -> str:
 
-        return f"chat:{session_id}"
+        return f"user:{user_id}:session:{session_id}"
 
 
 
-    async def get(self, session_id: str) -> List[Dict[str,str]]:
+    async def get(self, session_id: str, user_id: str = "anonymous") -> List[Dict[str,str]]:
 
-        vals = await self.r.lrange(self._key(session_id), 0, -1)
+        key = f"user:{user_id}:session:{session_id}"
+
+        vals = await self.r.lrange(key, 0, -1)
 
         return [json.loads(v) for v in vals]
 
 
 
-    async def append(self, session_id: str, role: Role, content: str) -> None:
+    async def append(self, session_id: str, role: Role, content: str, user_id: str = "anonymous") -> None:
 
         item = json.dumps({"role": role, "content": content})
 
-        key = self._key(session_id)
+        key = f"user:{user_id}:session:{session_id}"
 
         pipe = self.r.pipeline()
 
@@ -55,4 +57,7 @@ class RedisMemory:
 
 
 memory = RedisMemory(settings.REDIS_URL, settings.MAX_TURNS)
+
+# Export Redis connection for use in other modules (e.g., auth)
+redis = memory.r
 
