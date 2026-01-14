@@ -24,14 +24,17 @@ from .users import router as user_router
 
 from .auth import get_current_user
 
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://rag-chatbot-frontend-uogt.onrender.com",  # your actual frontend URL
-        "http://localhost:3000",
-        "http://localhost:3010",
+        "https://rag-chatbot-frontend-uogt.onrender.com",  # deployed frontend
+        "http://localhost:3000",  # local dev
+        "http://localhost:3010",  # local dev
     ],
     allow_credentials=True,
     allow_methods=["*"],
