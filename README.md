@@ -31,15 +31,16 @@ Additional features include **dark/light mode**, **session persistence**, and **
 
 ---
 
-## 🧩 System Architecture
+## 🧩 
+System Architecture
 
 ```mermaid
-graph TD;
-    A[User Interface (Next.js)] --> B(FastAPI Backend)
-    B --> C[Redis Memory (Session Storage)]
-    B --> D[Chroma Vector Store (Document Embeddings)]
-    B --> E[OpenAI GPT-4 API]
-    D --> F[(PDF / TXT Documents)]
+flowchart TD
+    A["User Interface (Next.js)"] --> B["FastAPI Backend"]
+    B --> C["Redis Memory (Session Storage)"]
+    B --> D["Chroma Vector Store (Document Embeddings)"]
+    B --> E["OpenAI GPT-4 API"]
+    D --> F["(PDF / TXT Documents)"]
 ```
 
 > **Figure 1:** High-level architecture showing interaction between the frontend, backend, and external APIs.
