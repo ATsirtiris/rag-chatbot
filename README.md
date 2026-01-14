@@ -34,7 +34,7 @@ Additional features include **dark/light mode**, **session persistence**, and **
 ## 🧩 System Architecture
 
 ```mermaid
-graph TD
+graph TD;
     A[User Interface (Next.js)] --> B(FastAPI Backend)
     B --> C[Redis Memory (Session Storage)]
     B --> D[Chroma Vector Store (Document Embeddings)]
